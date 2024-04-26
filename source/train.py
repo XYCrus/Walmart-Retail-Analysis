@@ -86,6 +86,27 @@ def main():
     rmse = sqrt(mean_squared_error(y_test, predictions))
     print(f'Model RMSE: {rmse}')
     print("Model R^2 Score:", model.score(X_test, y_test))
+    
+    feature_names = [c.replace(' ', '_') for c in X.columns]
+
+    explainer = LimeTabularExplainer(X_train.values,
+                                     feature_names=feature_names,
+                                     class_names=['profit'],
+                                     categorical_features=categorical_cols,
+                                     verbose=True,
+                                     mode='regression')
+
+    instance_index = 0 
+    instance = X_test.iloc[instance_index].values
+
+    exp = explainer.explain_instance(instance, model.predict, num_features=5)
+
+    exp.show_in_notebook(show_all=False)
+
+    fig = exp.as_pyplot_figure()
+    fig.tight_layout()
+    fig.show()
+
 
 
 if __name__ == "__main__":
