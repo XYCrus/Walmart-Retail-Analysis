@@ -9,6 +9,8 @@ from sklearn.impute import SimpleImputer
 from sklearn.metrics import mean_squared_error
 import numpy as np
 from math import sqrt
+from lime import lime_tabular
+from lime.lime_tabular import LimeTabularExplainer
 
 #%%
 def main():
